@@ -1,7 +1,7 @@
 # David Green — Cinematic Portfolio (project memory)
 
 ## What this is
-Award-style cinematic 3D-scroll personal portfolio for David Green. Scroll-scrubbed video sequences generated with the Higgsfield MCP. Identity reference for EVERY Higgsfield generation: /public/assets/avatar.png (same face, dark jacket, black tee, silver chain, keep wardrobe identical in all clips).
+Award-style cinematic 3D-scroll personal portfolio for David Green. Scroll-scrubbed video sequences generated with the Higgsfield MCP. Identity reference for EVERY Higgsfield generation: /public/assets/avatar.webp (same face, dark jacket, black tee, silver chain, keep wardrobe identical in all clips).
 
 ## Locked creative direction
 - Hero display type: DAVID GREEN, tracking in letter-by-letter on scroll
@@ -9,7 +9,7 @@ Award-style cinematic 3D-scroll personal portfolio for David Green. Scroll-scrub
 - Closer flare before the contact CTA: "NOT BUILT TO LOSE."
 - Pillars ("The Four Frequencies"): 01 BUILD · 02 OPERATE · 03 COMPETE · 04 LIVE
 - Stats strip (animated counters on scroll): $2.3M ARR managed · 174 users in 25 days · 3.9 GPA · 8 platforms shipped
-- Work cards, in order: Frequency -> Job Tracker -> WEI, using /public/assets/freq-hero.png, freq-rate.png, tracker-dash.png, wei-chat.png
+- Work cards, in order: Frequency -> Job Tracker -> WEI, using /public/assets/freq-hero.webp, freq-rate.webp, tracker-dash.webp, wei-chat.webp
 - Five hero clips, "THE FOUR ROOMS" storyboard:
   1) HERO ORBIT — black void, arms crossed, drifting cyan holo-dashboards, emerald-green rim light, slow smooth 360° camera orbit
   2) BUILD — dark workshop desk, green code holograms, the Frequency UI assembling midair, slow cinematic push-in over his shoulder
