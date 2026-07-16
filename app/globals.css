@@ -1,26 +1,127 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #060807;
+  --ink-soft: #0b0e0d;
+  --paper: #ece8df;
+  --paper-dim: #9b9890;
+  --emerald: #109468;
+  --emerald-deep: #0a5d42;
+  --emerald-flare: #2fdf96;
+  --holo: #79e6f2;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-paper: var(--paper);
+  --color-paper-dim: var(--paper-dim);
+  --color-emerald: var(--emerald);
+  --color-emerald-deep: var(--emerald-deep);
+  --color-flare: var(--emerald-flare);
+  --color-holo: var(--holo);
+  --font-display: var(--font-anton);
+  --font-sans: var(--font-grotesk);
+  --font-mono: var(--font-jetbrains);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-grotesk), system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--emerald);
+  color: var(--ink);
+}
+
+/* Three type tiers */
+.type-hero {
+  font-family: var(--font-anton), sans-serif;
+  font-size: clamp(4rem, 13vw, 15rem);
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.type-chapter {
+  font-family: var(--font-anton), sans-serif;
+  font-size: clamp(2.5rem, 8vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+.type-eyebrow {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--emerald-flare);
+}
+
+/* Masked line reveal wrapper */
+.mask-line {
+  overflow: hidden;
+  display: block;
+}
+
+/* Holo work-card dressing — code only, screenshots stay pixel-perfect */
+.holo-frame {
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--holo) 35%, transparent);
+  box-shadow:
+    0 0 24px color-mix(in srgb, var(--emerald) 25%, transparent),
+    inset 0 0 40px color-mix(in srgb, var(--holo) 4%, transparent);
+}
+.holo-frame::before,
+.holo-frame::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--holo);
+  border-style: solid;
+  z-index: 2;
+}
+.holo-frame::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+.holo-frame::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+.scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    color-mix(in srgb, var(--holo) 5%, transparent) 3px,
+    color-mix(in srgb, var(--holo) 5%, transparent) 4px
+  );
+}
+
+/* Marquee */
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee-x 70s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
 }
