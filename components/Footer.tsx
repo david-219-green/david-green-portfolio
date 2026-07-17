@@ -13,30 +13,6 @@ export default function Footer() {
             NYU Stern — BTE + CS · New York City
           </span>
         </div>
-        <nav className="flex gap-8">
-          <a
-            href="https://github.com/david-219-green"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-mono text-sm text-paper-dim transition-colors hover:text-flare"
-          >
-            GitHub
-          </a>
-          <a
-            href="https://www.linkedin.com/in/david-green-499239290"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-mono text-sm text-paper-dim transition-colors hover:text-flare"
-          >
-            LinkedIn
-          </a>
-          <a
-            href="mailto:dmg9769@stern.nyu.edu"
-            className="font-mono text-sm text-paper-dim transition-colors hover:text-flare"
-          >
-            Email
-          </a>
-        </nav>
         <span className="font-mono text-xs text-paper-dim">
           © 2026 — built, not bought
         </span>

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { gsap } from "@/lib/gsap";
+import WeiModal from "@/components/WeiModal";
 
 type Project = {
   title: string;
@@ -24,7 +25,7 @@ const PROJECTS: Project[] = [
     img: "/assets/freq-hero.webp",
     hoverImg: "/assets/freq-rate.webp",
     tags: ["Next.js", "TypeScript", "Supabase"],
-    href: "#", // TODO: Frequency production URL (David will supply)
+    href: "https://frequency-app.tech/",
   },
   {
     title: "Job Tracker",
@@ -32,9 +33,11 @@ const PROJECTS: Project[] = [
     meta: "Built to replace spreadsheets",
     img: "/assets/tracker-dash.webp",
     tags: ["Next.js", "Supabase", "Clerk", "Claude API"],
-    href: "#", // TODO: Job Tracker production URL (David will supply)
+    href: "https://job-tracker-ashy-zeta.vercel.app/",
   },
   {
+    // Clicking opens the WEI gate modal (production is client-private),
+    // which then links out to the local demo build.
     title: "WEI",
     line: "Enterprise RAG knowledge platform, built under contract for SASI.",
     meta: "Contracted build",
@@ -44,7 +47,7 @@ const PROJECTS: Project[] = [
   },
 ];
 
-function TiltCard({ p }: { p: Project }) {
+function TiltCard({ p, onClick }: { p: Project; onClick?: () => void }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const glareRef = useRef<HTMLDivElement>(null);
   const [hover, setHover] = useState(false);
@@ -127,7 +130,7 @@ function TiltCard({ p }: { p: Project }) {
           <h3 className="font-display text-2xl tracking-wide uppercase md:text-3xl">
             {p.title}
           </h3>
-          {p.href && (
+          {(p.href || onClick) && (
             <span className="font-mono text-xs text-emerald transition-transform duration-300 group-hover:translate-x-1">
               →
             </span>
@@ -152,9 +155,23 @@ function TiltCard({ p }: { p: Project }) {
   return (
     <div style={{ perspective: "1000px" }}>
       {p.href ? (
-        <a href={p.href} aria-label={p.title}>
+        <a
+          href={p.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={p.title}
+        >
           {inner}
         </a>
+      ) : onClick ? (
+        <button
+          type="button"
+          onClick={onClick}
+          aria-label={p.title}
+          className="block w-full cursor-pointer text-left"
+        >
+          {inner}
+        </button>
       ) : (
         inner
       )}
@@ -164,6 +181,7 @@ function TiltCard({ p }: { p: Project }) {
 
 export default function WorkCards() {
   const ref = useRef<HTMLElement>(null);
+  const [weiOpen, setWeiOpen] = useState(false);
 
   useEffect(() => {
     if (!ref.current) return;
@@ -190,8 +208,9 @@ export default function WorkCards() {
           <TiltCard p={PROJECTS[0]} />
         </div>
         <TiltCard p={PROJECTS[1]} />
-        <TiltCard p={PROJECTS[2]} />
+        <TiltCard p={PROJECTS[2]} onClick={() => setWeiOpen(true)} />
       </div>
+      <WeiModal open={weiOpen} onClose={() => setWeiOpen(false)} />
     </section>
   );
 }

@@ -125,3 +125,99 @@ body {
     animation: none;
   }
 }
+
+/* ---------- Modals ---------- */
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes panel-in {
+  from { opacity: 0; transform: scale(0.96) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  /* blur comes from the backdrop-blur-2xl utility on the element —
+     LightningCSS strips a hand-authored backdrop-filter here */
+  background: color-mix(in srgb, var(--ink) 55%, transparent);
+  animation: overlay-in 0.3s ease both;
+}
+.modal-panel {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  border: 1px solid color-mix(in srgb, var(--paper) 14%, transparent);
+  background: var(--ink-soft);
+  padding: 40px;
+  box-shadow:
+    0 0 60px color-mix(in srgb, var(--emerald) 12%, transparent),
+    0 24px 80px rgb(0 0 0 / 0.6);
+  animation: panel-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay,
+  .modal-panel {
+    animation: none;
+  }
+}
+
+/* ---------- Social icon stack (adapted from Uiverse hover-reveal) ---------- */
+.social-row {
+  display: flex;
+  gap: 14px;
+  -webkit-box-reflect: below 6px linear-gradient(transparent 55%, rgb(0 0 0 / 0.35));
+}
+.social-stack {
+  display: block;
+  width: 52px;
+  height: 52px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--paper) 25%, transparent);
+}
+.social-faces {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.46, -0.78, 0.5, 1.56);
+}
+.social-stack:hover .social-faces,
+.social-stack:focus-visible .social-faces {
+  transform: translateY(-52px);
+}
+.social-face {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.social-face svg {
+  width: 22px;
+  height: 22px;
+  fill: var(--paper);
+  opacity: 0.85;
+}
+.social-face--gh { background: #f5f5f2; }
+.social-face--li { background: #0274b3; }
+.social-face--gh svg { fill: #111; }
+.social-face--li svg { fill: #fff; }
+.social-face--gh svg,
+.social-face--li svg {
+  opacity: 0;
+  transition: opacity 0.45s ease 0.12s;
+}
+.social-stack:hover .social-face--gh svg,
+.social-stack:hover .social-face--li svg,
+.social-stack:focus-visible .social-face--gh svg,
+.social-stack:focus-visible .social-face--li svg {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .social-faces { transition: none; }
+}

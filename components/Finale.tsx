@@ -2,13 +2,17 @@
 
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { useState } from "react";
 import Magnetic from "@/components/Magnetic";
+import ContactModal from "@/components/ContactModal";
+import SocialStack from "@/components/SocialStack";
 
 /**
  * Pin 200vh. "NOT BUILT TO LOSE." scrubs scale 0.92→1 + tracking wide→tight
  * + opacity 0.35→1; emerald radial flare blooms 0.6→1; CTAs appear at 0.75.
  */
 export default function Finale({ lite }: { lite: boolean }) {
+  const [contactOpen, setContactOpen] = useState(false);
   const outerRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLHeadingElement>(null);
   const flareRef = useRef<HTMLDivElement>(null);
@@ -98,29 +102,33 @@ export default function Finale({ lite }: { lite: boolean }) {
         <div
           ref={ctaRef}
           className={
-            "relative z-10 mt-12 flex flex-wrap items-center justify-center gap-6" +
+            "relative z-10 mt-12 flex flex-col items-center gap-9" +
             (lite ? "" : " opacity-0")
           }
         >
-          <Magnetic>
-            <a
-              href="mailto:dmg9769@stern.nyu.edu"
-              className="inline-block border border-emerald bg-emerald/10 px-8 py-4 font-mono text-sm tracking-[0.14em] text-flare uppercase transition-colors duration-300 hover:bg-emerald hover:text-ink"
-            >
-              Contact me
-            </a>
-          </Magnetic>
-          <Magnetic>
-            {/* TODO: David will drop resume.pdf into /public — button ships now */}
-            <a
-              href="/resume.pdf"
-              download
-              className="inline-block border border-paper/25 px-8 py-4 font-mono text-sm tracking-[0.14em] text-paper uppercase transition-colors duration-300 hover:border-paper hover:bg-paper hover:text-ink"
-            >
-              Download resume
-            </a>
-          </Magnetic>
+          <div className="flex flex-wrap items-center justify-center gap-6">
+            <Magnetic>
+              <button
+                type="button"
+                onClick={() => setContactOpen(true)}
+                className="inline-block cursor-pointer border border-emerald bg-emerald/10 px-8 py-4 font-mono text-sm tracking-[0.14em] text-flare uppercase transition-colors duration-300 hover:bg-emerald hover:text-ink"
+              >
+                Contact me
+              </button>
+            </Magnetic>
+            <Magnetic>
+              <a
+                href="/resume.pdf"
+                download="David Green Resume.pdf"
+                className="inline-block border border-paper/25 px-8 py-4 font-mono text-sm tracking-[0.14em] text-paper uppercase transition-colors duration-300 hover:border-paper hover:bg-paper hover:text-ink"
+              >
+                Download resume
+              </a>
+            </Magnetic>
+          </div>
+          <SocialStack />
         </div>
+        <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
       </div>
     </section>
   );

@@ -125,8 +125,15 @@ export default function Site() {
     const raf = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
+    // Modals pause smooth scroll while open (see components/Modal.tsx).
+    const onModal = (e: Event) => {
+      if ((e as CustomEvent).detail?.open) lenis.stop();
+      else lenis.start();
+    };
+    window.addEventListener("modal-toggle", onModal);
     ScrollTrigger.refresh();
     return () => {
+      window.removeEventListener("modal-toggle", onModal);
       gsap.ticker.remove(raf);
       lenis.destroy();
     };
