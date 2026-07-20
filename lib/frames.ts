@@ -1,4 +1,4 @@
-export const FRAME_COUNT = 100;
+export const FRAME_COUNT = 192;
 
 export const framePath = (clip: number, index: number) =>
   `/frames/clip-${clip}/frame-${String(index + 1).padStart(3, "0")}.webp`;
@@ -80,6 +80,9 @@ export function drawCover(
   const scale = Math.max(cw / iw, ch / ih);
   const dw = iw * scale;
   const dh = ih * scale;
+  // Canvas resets smoothing state when resized — assert per draw.
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
   ctx.clearRect(0, 0, cw, ch);
   ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
 }

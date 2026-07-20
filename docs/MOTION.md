@@ -12,14 +12,14 @@ Distilled from research on Lando Norris (OFF+BRAND, Awwwards SOTY 2025 — Codro
 - **Pin budget**: hero 300vh + 4 chapters × 250vh + finale 200vh ≈ 1500vh pinned, ~2800vh total page. Breathers (marquee strips, stats, work) are unpinned.
 
 ## Preloader → hero
-- Progress = real count of hero frame `onload`s (100 frames) gated on `document.fonts.ready`; proxy tween `snap: 1` so the number never runs backward; counter in mono; minimum 1.8s on screen.
+- Progress = real count of hero frame `onload`s (192 frames) gated on `document.fonts.ready`; proxy tween `snap: 1` so the number never runs backward; counter in mono; minimum 1.8s on screen.
 - Exit: counter y -100% 0.45s power2.in → overlay `clip-path inset(0 0 100% 0)` 1.1s expo.inOut; hero frame 0 painted *before* the wipe; tagline/scroll-cue fade in over the wipe's last 0.4s.
 
-## Hero (pin 300vh, clip 1 orbit — 100 frames)
+## Hero (pin 300vh, clip 1 orbit — 192 frames)
 - Frames map linearly to full pin progress; one full 360° orbit per pin.
 - 0–0.05 hold; **DAVID GREEN tracks in letter-by-letter over 0.05→0.60** (scrubbed, ease none — sync: name completes just past half-orbit); tagline persists bottom-left; scroll cue fades out by 0.08; 0.9→1 name drifts up slightly to hand off.
 
-## Chapters 01–04 (pin 250vh each, clips 2–5 — 100 frames each)
+## Chapters 01–04 (pin 250vh each, clips 2–5 — 192 frames each)
 - Bands: 0–0.08 settle · 0.06–0.30 index + chapter word scrub in (y + opacity) · copy lines masked-reveal (triggered once at 0.22, 0.9s, stagger 0.07, expo.out) · 0.80–1 title exits up (scrubbed).
 - One accent mechanic per chapter, same skeleton: BUILD glyph-drift · OPERATE $0→$2.3M mono counter tied to scrub · COMPETE impact flash at ~0.7 · LIVE emerald flood rising with progress.
 - Frames lazy-load via IntersectionObserver (rootMargin 150%) — never block first paint.
@@ -33,4 +33,4 @@ Distilled from research on Lando Norris (OFF+BRAND, Awwwards SOTY 2025 — Codro
 - Grain overlay 6% opacity, pointer-events none, everywhere.
 - `prefers-reduced-motion` OR viewport <768px: no pins/scrubs — poster frames, 0.4s fades, counters still count.
 - `invalidateOnRefresh: true` on every pinned trigger; masked text via overflow-hidden wrappers + transforms only.
-- Frame budget ≤6MB per clip (100 × 1600px WebP); hold compressed Images, draw with cover-fit math on dpr-sized canvas.
+- Frame budget ≤20MB per clip (192 × 2560px WebP, extracted from 4K AI-upscaled masters — ByteDance `aigc` preset via Higgsfield); hold compressed Images, draw with cover-fit math + `imageSmoothingQuality: high` on dpr-sized canvas.
