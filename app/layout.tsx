@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Anton, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Anton, Space_Grotesk, MuseoModerno } from "next/font/google";
 import "./globals.css";
 
 const anton = Anton({
@@ -13,8 +13,9 @@ const grotesk = Space_Grotesk({
   subsets: ["latin"],
 });
 
-const jetbrains = JetBrains_Mono({
-  variable: "--font-jetbrains",
+const museo = MuseoModerno({
+  variable: "--font-museo",
+  weight: "400",
   subsets: ["latin"],
 });
 
@@ -53,7 +54,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${anton.variable} ${grotesk.variable} ${jetbrains.variable} antialiased`}
+      className={`${anton.variable} ${grotesk.variable} ${museo.variable} antialiased`}
     >
       <body>{children}</body>
     </html>

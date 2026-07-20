@@ -22,7 +22,7 @@
   --color-holo: var(--holo);
   --font-display: var(--font-anton);
   --font-sans: var(--font-grotesk);
-  --font-mono: var(--font-jetbrains);
+  --font-mono: var(--font-museo);
 }
 
 html {
@@ -59,7 +59,7 @@ body {
   text-transform: uppercase;
 }
 .type-eyebrow {
-  font-family: var(--font-jetbrains), monospace;
+  font-family: var(--font-museo), sans-serif;
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
