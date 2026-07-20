@@ -24,8 +24,7 @@ const DESCRIPTION =
   "I hate busywork. I build and use tools to make life easier. Founder of Frequency, builder of platforms — NYU Stern BTE + CS.";
 
 export const metadata: Metadata = {
-  // TODO: swap to the production domain when deployed to Vercel
-  metadataBase: new URL("https://david-green-portfolio.vercel.app"),
+  metadataBase: new URL("https://www.davidmichaelgreen.com"),
   title: TITLE,
   description: DESCRIPTION,
   openGraph: {
