@@ -135,6 +135,16 @@ const CHAPTERS: Chapter[] = [
     lineup: {
       genres: "House Music · Tech House · Techno",
       artists: ["Mochakk", "Franky Rizardo", "Sidney Charles"],
+      dining: {
+        label: "Best DG Restaurants of All Time",
+        spots: [
+          { name: "Maido", city: "Lima, Peru" },
+          { name: "Leña", city: "Dubai" },
+          { name: "Imperial Treasure", city: "London" },
+          { name: "Black Cow", city: "Singapore" },
+          { name: "Hillstone", city: "Miami" },
+        ],
+      },
     },
     chips: {
       side: "right",

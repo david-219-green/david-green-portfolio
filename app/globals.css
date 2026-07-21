@@ -216,17 +216,31 @@ body:has([data-preloader]) {
 }
 .social-face--gh { background: #f5f5f2; }
 .social-face--li { background: #0274b3; }
+.social-face--ig {
+  background: linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+}
 .social-face--gh svg { fill: #111; }
 .social-face--li svg { fill: #fff; }
+.social-face--ig svg { fill: #fff; }
 .social-face--gh svg,
-.social-face--li svg {
+.social-face--li svg,
+.social-face--ig svg {
   opacity: 0;
   transition: opacity 0.45s ease 0.12s;
 }
 .social-stack:hover .social-face--gh svg,
 .social-stack:hover .social-face--li svg,
+.social-stack:hover .social-face--ig svg,
 .social-stack:focus-visible .social-face--gh svg,
-.social-stack:focus-visible .social-face--li svg {
+.social-stack:focus-visible .social-face--li svg,
+.social-stack:focus-visible .social-face--ig svg {
   opacity: 1;
 }
 @media (prefers-reduced-motion: reduce) {

@@ -6,21 +6,25 @@ import { createPortal } from "react-dom";
 /**
  * Shared modal shell: blurred ink overlay, animated panel, body scroll lock.
  * Fires "modal-toggle" so Site can pause/resume Lenis while a modal is open.
- * dismissible=false makes it a hard gate: no X, no outside click, no Esc.
+ * dismissible=false removes the X and disables Esc; outsideDismiss overrides
+ * whether clicking the overlay closes (defaults to follow dismissible).
  */
 export default function Modal({
   open,
   onClose,
   dismissible = true,
+  outsideDismiss,
   label,
   children,
 }: {
   open: boolean;
   onClose: () => void;
   dismissible?: boolean;
+  outsideDismiss?: boolean;
   label: string;
   children: React.ReactNode;
 }) {
+  const closeOnOutside = outsideDismiss ?? dismissible;
   useEffect(() => {
     if (!open) return;
     window.dispatchEvent(new CustomEvent("modal-toggle", { detail: { open: true } }));
@@ -47,7 +51,7 @@ export default function Modal({
       role="dialog"
       aria-modal="true"
       aria-label={label}
-      onClick={dismissible ? onClose : undefined}
+      onClick={closeOnOutside ? onClose : undefined}
     >
       <div className="modal-panel" onClick={(e) => e.stopPropagation()}>
         {dismissible && (

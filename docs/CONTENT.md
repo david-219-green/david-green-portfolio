@@ -64,7 +64,7 @@ Single source of truth for the copy/UI overhaul. FULLY LOCKED and implemented; m
 - Genres: House Music · Tech House · Techno
 - Artists: Mochakk · Franky Rizardo · Sidney Charles
 - Travel: countries only → `28 countries`
-- Festival lineup set-piece top-left (genres line + artist names in display caps).
+- Festival lineup set-piece top-left (genres line + artist names in display caps), followed by the dining list: `Best DG Restaurants of All Time` → Maido (Lima, Peru) · Leña (Dubai) · Imperial Treasure (London) · Black Cow (Singapore) · Hillstone (Miami).
 - Right chips in order: `28 countries` · `Miami Heat, die hard` · `Gym Grind` · `Rafa and Alcaraz Super Fan` · `Absolute Foodie` · `Poker Grind` · `Spikeball` · `Building Tech`
 
 ## Marquee (both instances, ~44 items, locked)
@@ -73,11 +73,12 @@ Next.js · TypeScript · JavaScript · React · Python · SQL · Supabase · Pos
 ## Work section
 - Eyebrow: "Selected work" → **"Most Recent 3 Projects"**. Heading "Work" stays.
 - No dashes in any card text.
-- Job Tracker line: `A job hunt that runs itself. A Claude agent logs everything.`
+- Job Tracker line: `A job hunt that runs itself. A Claude agent logs everything for you automatically.`
 - Tags:
   - Frequency: Next.js · TypeScript · Supabase · Clerk · Tailwind · Vercel · Spotify API · EDMTrain API · OpenAI API · ranking algorithm
   - Job Tracker: Supabase · Clerk · Claude API · AI agent · Vercel · A/B testing · KPI dashboards · outbound automation
-  - WEI: Next.js · Supabase · Drizzle ORM · pgvector · RAG · OCR ingestion · Anthropic API · citation engine · LangSmith · Sentry
+  - WEI: Next.js · Drizzle ORM · pgvector · RAG · OCR ingestion · Anthropic API · citation engine · LangSmith · Sentry (Supabase removed → 2 tag rows)
+- WEI gate modal: no X, Esc ignored, but clicking OUTSIDE the panel closes it (plus the Back to portfolio button). Socials: GitHub · LinkedIn · Instagram (david.__.green, brand-gradient hover face).
 
 ## Finale + page end
 - Footer component DELETED (bottom marquee, name block, © row).

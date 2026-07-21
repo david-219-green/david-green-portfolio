@@ -5,9 +5,9 @@ import Modal from "@/components/Modal";
 const WEI_DEMO_URL = "https://wei-v1.vercel.app/";
 
 /**
- * Hard gate before the WEI demo: not dismissible by X / outside click / Esc.
- * Explains that the production system is client-private before letting the
- * visitor through to the local demo build.
+ * Gate before the WEI demo: no X and Esc is ignored, but clicking outside
+ * the panel closes it. Explains that the production system is client-private
+ * before letting the visitor through to the local demo build.
  */
 export default function WeiModal({
   open,
@@ -17,7 +17,13 @@ export default function WeiModal({
   onClose: () => void;
 }) {
   return (
-    <Modal open={open} onClose={onClose} dismissible={false} label="About the WEI build">
+    <Modal
+      open={open}
+      onClose={onClose}
+      dismissible={false}
+      outsideDismiss
+      label="About the WEI build"
+    >
       <span className="type-eyebrow">WEI — contracted build</span>
       <h3 className="font-display mt-2 mb-5 text-4xl tracking-wide uppercase">
         The real one is locked.

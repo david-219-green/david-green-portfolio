@@ -40,7 +40,7 @@ const PROJECTS: Project[] = [
   },
   {
     title: "Job Tracker",
-    line: "A job hunt that runs itself. A Claude agent logs everything.",
+    line: "A job hunt that runs itself. A Claude agent logs everything for you automatically.",
     meta: "Built to replace spreadsheets",
     img: "/assets/tracker-dash.webp",
     tags: [
@@ -64,7 +64,6 @@ const PROJECTS: Project[] = [
     img: "/assets/wei-chat.webp",
     tags: [
       "Next.js",
-      "Supabase",
       "Drizzle ORM",
       "pgvector",
       "RAG",

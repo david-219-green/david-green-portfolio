@@ -17,7 +17,11 @@ export type Chips = {
   items: string[];
 };
 export type Scoreboard = { title: string; rows: [string, string][] };
-export type Lineup = { genres: string; artists: string[] };
+export type Lineup = {
+  genres: string;
+  artists: string[];
+  dining?: { label: string; spots: { name: string; city: string }[] };
+};
 
 const GLYPHS = "⌁◇⟢∆⌗◈⟡∇⌬◆⟠"; // abstract drift for BUILD — never legible words
 
@@ -192,13 +196,13 @@ export default function ChapterSection({
         tl.to(scoreBox, { autoAlpha: 0, duration: 0.05 }, 0.9);
       }
 
-      // Lineup set-piece: genres then artists cascade, fade at 0.9.
+      // Lineup set-piece: genres → artists → dining list cascade, fade at 0.9.
       const lineupBox = root.querySelector<HTMLElement>("[data-lineup]");
       const lineupItems = root.querySelectorAll<HTMLElement>("[data-lineup-item]");
       if (lineupBox) {
         gsap.set(lineupItems, { yPercent: 110 });
         lineupItems.forEach((el, i) => {
-          tl.to(el, { yPercent: 0, duration: 0.05 }, 0.18 + i * 0.06);
+          tl.to(el, { yPercent: 0, duration: 0.045 }, 0.16 + i * 0.05);
         });
         tl.to(lineupBox, { autoAlpha: 0, duration: 0.05 }, 0.9);
       }
@@ -237,6 +241,9 @@ export default function ChapterSection({
   const liteAside: string[] = [
     ...(scoreboard ? scoreboard.rows.map(([k, v]) => `${k} ${v}`) : []),
     ...(lineup ? [lineup.genres, ...lineup.artists] : []),
+    ...(lineup?.dining
+      ? lineup.dining.spots.map((s) => `${s.name} · ${s.city}`)
+      : []),
     ...(chips ? chips.items : []),
   ];
 
@@ -372,11 +379,11 @@ export default function ChapterSection({
           </div>
         )}
 
-        {/* Side layer: festival lineup (LIVE) */}
+        {/* Side layer: festival lineup + dining list (LIVE) */}
         {!lite && lineup && (
           <div
             data-lineup
-            className="pointer-events-none absolute top-[20%] left-6 z-10 hidden md:left-12 md:block"
+            className="pointer-events-none absolute top-[10%] left-6 z-10 hidden md:left-12 md:block"
           >
             <div className="mb-3 overflow-hidden">
               <div
@@ -398,6 +405,35 @@ export default function ChapterSection({
                 </div>
               </div>
             ))}
+            {lineup.dining && (
+              <>
+                <div className="mt-8 mb-3 overflow-hidden">
+                  <div
+                    data-lineup-item
+                    className="font-mono text-[11px] tracking-[0.22em] text-flare uppercase"
+                    style={{ textShadow: "0 2px 12px rgba(0,0,0,0.9)" }}
+                  >
+                    {lineup.dining.label}
+                  </div>
+                </div>
+                {lineup.dining.spots.map((s) => (
+                  <div key={s.name} className="overflow-hidden">
+                    <div
+                      data-lineup-item
+                      className="flex items-baseline gap-3 py-0.5"
+                      style={{ textShadow: "0 2px 16px rgba(0,0,0,0.85)" }}
+                    >
+                      <span className="font-display text-lg leading-tight tracking-wide text-paper/90 uppercase md:text-2xl">
+                        {s.name}
+                      </span>
+                      <span className="font-mono text-[10px] tracking-[0.14em] text-paper-dim uppercase">
+                        {s.city}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         )}
 
