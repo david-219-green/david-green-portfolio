@@ -82,8 +82,8 @@ export default function Hero({
       <div
         className={
         lite
-            ? "relative flex h-svh flex-col justify-between overflow-hidden"
-            : "sticky top-0 flex h-screen flex-col justify-between overflow-hidden"
+            ? "relative flex h-svh flex-col justify-end overflow-hidden"
+            : "sticky top-0 flex h-screen flex-col justify-end overflow-hidden"
         }
       >
         {/* Poster paints first (LCP); canvas draws over it in full mode. */}
@@ -103,11 +103,6 @@ export default function Hero({
         )}
         {/* Readability scrim */}
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/40" />
-
-        <div className="relative z-10 flex items-start justify-between p-6 md:p-10">
-          <span className="type-eyebrow">Portfolio — 2026</span>
-          <span className="type-eyebrow">NYC</span>
-        </div>
 
         <div className="relative z-10 p-6 pb-10 md:p-10 md:pb-14">
           <h1 ref={titleRef} className="type-hero" aria-label={NAME}>

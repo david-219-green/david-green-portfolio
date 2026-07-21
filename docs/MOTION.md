@@ -12,8 +12,8 @@ Distilled from research on Lando Norris (OFF+BRAND, Awwwards SOTY 2025 — Codro
 - **Pin budget**: hero 300vh + 4 chapters × 250vh + finale 200vh ≈ 1500vh pinned, ~2800vh total page. Breathers (marquee strips, stats, work) are unpinned.
 
 ## Preloader → hero
-- Progress = real count of hero frame `onload`s (192 frames) gated on `document.fonts.ready`; proxy tween `snap: 1` so the number never runs backward; counter in mono; minimum 1.8s on screen.
-- Exit: counter y -100% 0.45s power2.in → overlay `clip-path inset(0 0 100% 0)` 1.1s expo.inOut; hero frame 0 painted *before* the wipe; tagline/scroll-cue fade in over the wipe's last 0.4s.
+- Centered DG monogram: SVG strokes (pathLength 100) drawn by real hero-frame load progress (192 frames), gated on `document.fonts.ready`; proxy tween so the stroke never runs backward; 0.8s anti-flash minimum.
+- Exit: stroke snaps complete 0.2s → glow flare + monogram dims while a checkmark draws 0.35s power2.out → overlay `clip-path inset(0 0 100% 0)` 0.7s expo.inOut; hero frame 0 painted *before* the wipe.
 
 ## Hero (pin 300vh, clip 1 orbit — 192 frames)
 - Frames map linearly to full pin progress; one full 360° orbit per pin.
@@ -21,13 +21,15 @@ Distilled from research on Lando Norris (OFF+BRAND, Awwwards SOTY 2025 — Codro
 
 ## Chapters 01–04 (pin 250vh each, clips 2–5 — 192 frames each)
 - Bands: 0–0.08 settle · 0.06–0.30 index + chapter word scrub in (y + opacity) · copy lines masked-reveal (triggered once at 0.22, 0.9s, stagger 0.07, expo.out) · 0.80–1 title exits up (scrubbed).
-- One accent mechanic per chapter, same skeleton: BUILD glyph-drift · OPERATE $0→$2.3M mono counter tied to scrub · COMPETE impact flash at ~0.7 · LIVE emerald flood rising with progress.
+- Accent mechanics: BUILD glyph-drift · COMPETE impact flash at ~0.7 · LIVE emerald flood rising with progress (OPERATE counter removed — chips carry the numbers).
+- Side layer per chapter: story beats one-at-a-time 0.15→0.82 (masked swap) · chips accumulate from 0.24 step 0.07 (COMPETE chips punch at 0.72 post-flash) · set-pieces (COMPETE scoreboard, LIVE lineup) build 0.16→0.6 · all side layers fade by 0.9. Lite mode renders chips/scoreboard/lineup as static rows; beats are desktop-only.
 - Frames lazy-load via IntersectionObserver (rootMargin 150%) — never block first paint.
 
-## Stats / Work / Finale
-- Stats: count-up 1.2s power1.out `snap: 1`, stagger 0.08, fire **once** at `top 65%` — an event, not a slider.
+## Stats / Track record / Work / Finale
+- Stats (5): count-up 1.2s power1.out, stagger 0.08, fire on EVERY entry (onEnter + onEnterBack) and reset once fully out of view — replays each pass.
+- Track record ("Where I've Operated"): rows y 28→0 / autoAlpha 0.7s power3.out stagger 0.12 + emerald tick scaleY, once at top 70%.
 - Work cards: enter y 60→0 / autoAlpha 0.8s power3.out stagger 0.1; 3D tilt ≤6°, glare follows cursor; image hover scale 1.06 / 0.6s power2.out.
-- Finale: pin 200vh; "NOT BUILT TO LOSE." scrubs scale 0.92→1 + tracking wide→tight + opacity 0.35→1; emerald radial flare blooms 0.6→1; CTAs (magnetic, lerp 0.15, max 24px) appear at 0.75.
+- Finale (LAST section — footer removed, page hard-stops here): pin 200vh; "NOT BUILT TO LOSE." scrubs scale 0.92→1 + tracking wide→tight + opacity 0.35→1; emerald radial flare blooms 0.6→1; CTAs (magnetic, lerp 0.15, max 24px) appear at 0.75; sign-off (name + school bottom-left, © 2026 bottom-right) scrubs in 0.9→1, reversible.
 
 ## Safety rails
 - Grain overlay 6% opacity, pointer-events none, everywhere.

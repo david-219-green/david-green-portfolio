@@ -37,7 +37,7 @@ function CopyRow({ label, value }: { label: string; value: string }) {
         type="button"
         onClick={copy}
         aria-label={`Copy ${label.toLowerCase()}`}
-        className="flex h-10 cursor-pointer items-center justify-center gap-2 border border-paper/20 px-3 font-mono text-xs tracking-[0.1em] text-paper-dim uppercase transition-colors hover:border-flare/60 hover:text-flare"
+        className="flex h-10 cursor-pointer items-center justify-center gap-2 rounded-full border border-paper/20 px-4 font-mono text-xs tracking-[0.1em] text-paper-dim uppercase transition-colors hover:border-flare/60 hover:text-flare"
       >
         {copied ? (
           <span className="flex items-center gap-1.5 text-flare">

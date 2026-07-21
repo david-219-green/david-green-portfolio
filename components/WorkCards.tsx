@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { gsap } from "@/lib/gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import WeiModal from "@/components/WeiModal";
 
 type Project = {
@@ -24,15 +24,35 @@ const PROJECTS: Project[] = [
     meta: "Founder · 174 users in 25 days · beta capped at 100 + waitlist",
     img: "/assets/freq-hero.webp",
     hoverImg: "/assets/freq-rate.webp",
-    tags: ["Next.js", "TypeScript", "Supabase"],
+    tags: [
+      "Next.js",
+      "TypeScript",
+      "Supabase",
+      "Clerk",
+      "Tailwind",
+      "Vercel",
+      "Spotify API",
+      "EDMTrain API",
+      "OpenAI API",
+      "ranking algorithm",
+    ],
     href: "https://frequency-app.tech/",
   },
   {
     title: "Job Tracker",
-    line: "A job hunt that runs itself — a Claude-powered chat agent logs everything.",
+    line: "A job hunt that runs itself. A Claude agent logs everything.",
     meta: "Built to replace spreadsheets",
     img: "/assets/tracker-dash.webp",
-    tags: ["Next.js", "Supabase", "Clerk", "Claude API"],
+    tags: [
+      "Supabase",
+      "Clerk",
+      "Claude API",
+      "AI agent",
+      "Vercel",
+      "A/B testing",
+      "KPI dashboards",
+      "outbound automation",
+    ],
     href: "https://job-tracker-ashy-zeta.vercel.app/",
   },
   {
@@ -42,7 +62,18 @@ const PROJECTS: Project[] = [
     line: "Enterprise RAG knowledge platform, built under contract for SASI.",
     meta: "Contracted build",
     img: "/assets/wei-chat.webp",
-    tags: ["Next.js", "pgvector", "Anthropic API"],
+    tags: [
+      "Next.js",
+      "Supabase",
+      "Drizzle ORM",
+      "pgvector",
+      "RAG",
+      "OCR ingestion",
+      "Anthropic API",
+      "citation engine",
+      "LangSmith",
+      "Sentry",
+    ],
     badge: "Contracted",
   },
 ];
@@ -120,7 +151,7 @@ function TiltCard({ p, onClick }: { p: Project; onClick?: () => void }) {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-holo/8 to-transparent" />
         <div ref={glareRef} className="pointer-events-none absolute inset-0" />
         {p.badge && (
-          <span className="absolute top-4 right-4 border border-holo/40 bg-ink/70 px-3 py-1 font-mono text-xs tracking-[0.14em] text-holo uppercase">
+          <span className="absolute top-4 right-4 rounded-full border border-holo/40 bg-ink/70 px-3.5 py-1 font-mono text-xs tracking-[0.14em] text-holo uppercase">
             {p.badge}
           </span>
         )}
@@ -142,7 +173,7 @@ function TiltCard({ p, onClick }: { p: Project; onClick?: () => void }) {
           {p.tags.map((t) => (
             <span
               key={t}
-              className="border border-paper/15 px-2 py-0.5 font-mono text-xs text-paper-dim"
+              className="rounded-full border border-paper/15 px-2.5 py-0.5 font-mono text-xs text-paper-dim"
             >
               {t}
             </span>
@@ -185,23 +216,45 @@ export default function WorkCards() {
 
   useEffect(() => {
     if (!ref.current) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const ctx = gsap.context(() => {
-      gsap.to("[data-card]", {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        stagger: 0.1,
-        scrollTrigger: { trigger: ref.current, start: "top 70%", once: true },
+      const cards = gsap.utils.toArray<HTMLElement>("[data-card]");
+      if (reduced) {
+        gsap.set(cards, { autoAlpha: 1 });
+        return;
+      }
+      const reset = () => {
+        gsap.killTweensOf(cards);
+        gsap.set(cards, { autoAlpha: 0, y: 60 });
+      };
+      const play = () => {
+        reset();
+        gsap.to(cards, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.1,
+        });
+      };
+      reset();
+      // Replays on every pass: reappears whenever it comes back on screen.
+      ScrollTrigger.create({
+        trigger: ref.current,
+        start: "top 70%",
+        end: "bottom top",
+        onEnter: play,
+        onEnterBack: play,
+        onLeave: reset,
+        onLeaveBack: reset,
       });
-      gsap.set("[data-card]", { y: 60 });
     }, ref);
     return () => ctx.revert();
   }, []);
 
   return (
     <section ref={ref} className="mx-auto max-w-6xl px-6 py-24 md:py-32">
-      <span className="type-eyebrow">Selected work</span>
+      <span className="type-eyebrow">Most Recent 3 Projects</span>
       <h2 className="type-chapter mt-3 mb-12">Work</h2>
       <div className="grid gap-10 md:grid-cols-2">
         <div className="md:col-span-2">

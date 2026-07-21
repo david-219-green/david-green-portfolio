@@ -37,7 +37,7 @@ export default function WeiModal({
           target="_blank"
           rel="noopener noreferrer"
           onClick={onClose}
-          className="inline-block cursor-pointer border border-emerald bg-emerald/10 px-6 py-3.5 font-mono text-sm tracking-[0.14em] text-flare uppercase transition-colors duration-300 hover:bg-emerald hover:text-ink"
+          className="inline-block cursor-pointer rounded-full border border-emerald bg-emerald/10 px-7 py-3.5 font-mono text-sm tracking-[0.14em] text-flare uppercase transition-colors duration-300 hover:bg-emerald hover:text-ink"
         >
           Enter the demo →
         </a>

@@ -55,7 +55,7 @@ export default function Modal({
             type="button"
             aria-label="Close"
             onClick={onClose}
-            className="absolute top-4 right-4 flex h-9 w-9 cursor-pointer items-center justify-center border border-paper/15 font-mono text-lg text-paper-dim transition-colors hover:border-paper/40 hover:text-paper"
+            className="absolute top-4 right-4 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-paper/15 font-mono text-lg text-paper-dim transition-colors hover:border-paper/40 hover:text-paper"
           >
             ×
           </button>
