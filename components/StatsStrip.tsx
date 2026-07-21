@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
-// Manually edited by David — bump whenever.
-const VISITORS = 106;
+// Shown until the live count loads — and always outside production.
+const FALLBACK_VISITORS = 106;
+const VISITORS_IDX = 4;
 
 const STATS: {
   end: number;
@@ -17,20 +18,43 @@ const STATS: {
   { end: 174, decimals: 0, label: "Frequency users\nin 25 days" },
   { end: 3.9, decimals: 1, label: "GPA" },
   { end: 7, decimals: 0, label: "platforms shipped" },
-  { end: VISITORS, decimals: 0, label: "visitors before you" },
+  { end: FALLBACK_VISITORS, decimals: 0, label: "visitors before you" },
 ];
 
 /**
- * Counters re-run on EVERY viewport entry (down or up) and reset once the
- * strip fully leaves, so scrolling back always replays the count-up.
+ * Counters play from the strip's FIRST visible pixel and reset only once it
+ * is fully off-screen — zeros are never visible while the strip is in view.
+ * Replays on every pass in either direction. `lite` is in the effect deps so
+ * the trigger re-measures when the layout mode flips.
  */
-export default function StatsStrip() {
+export default function StatsStrip({ lite }: { lite: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [visitors, setVisitors] = useState(FALLBACK_VISITORS);
+
+  // Live visitor count — production domain only (localhost and preview
+  // deploys never count). One increment per browser per calendar day;
+  // otherwise read-only. Silently keeps the fallback if storage is absent.
+  useEffect(() => {
+    if (!/(^|\.)davidmichaelgreen\.com$/.test(window.location.hostname)) return;
+    const KEY = "dg-visit-day";
+    const today = new Date().toISOString().slice(0, 10);
+    const increment = localStorage.getItem(KEY) !== today;
+    fetch("/api/visits", { method: increment ? "POST" : "GET" })
+      .then((r) => r.json())
+      .then((d: { count: number | null }) => {
+        if (typeof d.count === "number") {
+          setVisitors(d.count);
+          if (increment) localStorage.setItem(KEY, today);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     if (!ref.current) return;
     const nums = ref.current.querySelectorAll<HTMLElement>("[data-num]");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const ends = STATS.map((s, i) => (i === VISITORS_IDX ? visitors : s.end));
 
     const format = (i: number, v: number) => {
       const s = STATS[i];
@@ -38,7 +62,7 @@ export default function StatsStrip() {
     };
 
     if (reduced) {
-      nums.forEach((el, i) => (el.textContent = format(i, STATS[i].end)));
+      nums.forEach((el, i) => (el.textContent = format(i, ends[i])));
       return;
     }
 
@@ -55,7 +79,7 @@ export default function StatsStrip() {
           const counter = { v: 0 };
           tweens.push(
             gsap.to(counter, {
-              v: STATS[i].end,
+              v: ends[i],
               duration: 1.2,
               ease: "power1.out",
               delay: i * 0.08,
@@ -68,7 +92,9 @@ export default function StatsStrip() {
       };
       ScrollTrigger.create({
         trigger: ref.current,
-        start: "top 65%",
+        // First visible pixel → play; fully off-screen → reset. The strip is
+        // never on screen showing static zeros.
+        start: "top bottom",
         end: "bottom top",
         onEnter: play,
         onEnterBack: play,
@@ -77,7 +103,7 @@ export default function StatsStrip() {
       });
     }, ref);
     return () => ctx.revert();
-  }, []);
+  }, [lite, visitors]);
 
   return (
     <div ref={ref} className="border-y border-paper/10 bg-ink-soft">

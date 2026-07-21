@@ -210,7 +210,8 @@ function TiltCard({ p, onClick }: { p: Project; onClick?: () => void }) {
   );
 }
 
-export default function WorkCards() {
+// `lite` in the effect deps re-measures the trigger when the layout mode flips.
+export default function WorkCards({ lite }: { lite: boolean }) {
   const ref = useRef<HTMLElement>(null);
   const [weiOpen, setWeiOpen] = useState(false);
 
@@ -250,7 +251,7 @@ export default function WorkCards() {
       });
     }, ref);
     return () => ctx.revert();
-  }, []);
+  }, [lite]);
 
   return (
     <section ref={ref} className="mx-auto max-w-6xl px-6 py-24 md:py-32">

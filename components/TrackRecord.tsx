@@ -40,7 +40,8 @@ const ROLES: {
 ];
 
 /** Career ledger: rows masked-reveal once with an emerald tick per row. */
-export default function TrackRecord() {
+// `lite` in the effect deps re-measures the trigger when the layout mode flips.
+export default function TrackRecord({ lite }: { lite: boolean }) {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -84,7 +85,7 @@ export default function TrackRecord() {
       });
     }, ref);
     return () => ctx.revert();
-  }, []);
+  }, [lite]);
 
   return (
     <section ref={ref} className="mx-auto max-w-6xl px-6 py-24 md:py-32">

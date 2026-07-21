@@ -93,6 +93,7 @@ export default function Preloader({
   return (
     <div
       ref={overlayRef}
+      data-preloader
       className="fixed inset-0 z-50 flex items-center justify-center bg-ink"
       style={{ clipPath: "inset(0 0 0 0)" }}
     >

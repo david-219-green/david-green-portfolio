@@ -201,9 +201,26 @@ export default function Site() {
     };
   }, [seqs]);
 
-  // Lenis + ScrollTrigger wiring — full mode only, started after the reveal.
+  // Scroll is locked while the preloader overlay is up — nobody starts the
+  // story mid-page, and no triggers fire beneath the overlay.
   useEffect(() => {
-    if (!ready || lite) return;
+    if (ready) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [ready]);
+
+  // After the reveal, re-measure every trigger against the settled layout —
+  // BOTH modes. (The lite flip collapses the page from the SSR full-mode
+  // layout; skipping this left mobile triggers at stale positions.)
+  useEffect(() => {
+    if (!ready) return;
+    if (lite) {
+      ScrollTrigger.refresh();
+      return;
+    }
     const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
     lenis.on("scroll", ScrollTrigger.update);
     const raf = (time: number) => lenis.raf(time * 1000);
@@ -233,15 +250,15 @@ export default function Site() {
       <Grain />
       <main>
         <Hero seq={seqs.get(1)!} ready={ready} lite={lite} />
-        <StatsStrip />
+        <StatsStrip lite={lite} />
         <ChapterSection {...CHAPTERS[0]} seq={seqs.get(2)!} lite={lite} />
         <ChapterSection {...CHAPTERS[1]} seq={seqs.get(3)!} lite={lite} />
         <Marquee />
         <ChapterSection {...CHAPTERS[2]} seq={seqs.get(4)!} lite={lite} />
         <ChapterSection {...CHAPTERS[3]} seq={seqs.get(5)!} lite={lite} />
         <Marquee />
-        <TrackRecord />
-        <WorkCards />
+        <TrackRecord lite={lite} />
+        <WorkCards lite={lite} />
         <Finale lite={lite} />
       </main>
     </>

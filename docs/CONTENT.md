@@ -20,7 +20,7 @@ Single source of truth for the copy/UI overhaul. FULLY LOCKED and implemented; m
 2. `174` / Frequency users in 25 days
 3. `3.9` / GPA
 4. `7` / platforms shipped
-5. `106` / visitors before you  ← static const, easy manual edit
+5. `106+` / visitors before you  ← LIVE in production: /api/visits (Upstash Redis via Vercel marketplace, SEED 105 + increments), +1 per browser per calendar day (localStorage `dg-visit-day`), production hostname only, static 106 fallback when storage is missing
 
 ## Chapters — shared
 - Eyebrow on all four: **"The Four Pillars of DG"** (no numbers).

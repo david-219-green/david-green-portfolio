@@ -72,6 +72,12 @@ body {
   display: block;
 }
 
+/* Scroll stays locked from FIRST PAINT while the preloader overlay exists —
+   covers the pre-hydration window the JS lock in Site.tsx can't reach. */
+body:has([data-preloader]) {
+  overflow: hidden;
+}
+
 /* Holo work-card dressing — code only, screenshots stay pixel-perfect */
 .holo-frame {
   position: relative;

@@ -26,12 +26,13 @@ Distilled from research on Lando Norris (OFF+BRAND, Awwwards SOTY 2025 — Codro
 - Frames lazy-load via IntersectionObserver (rootMargin 150%) — never block first paint.
 
 ## Stats / Track record / Work / Finale
-- Stats (5): count-up 1.2s power1.out, stagger 0.08, fire on EVERY entry (onEnter + onEnterBack) and reset once fully out of view — replays each pass.
+- Stats (5): count-up 1.2s power1.out, stagger 0.08, fire on EVERY entry at the strip's first visible pixel (start "top bottom") and reset only once fully off-screen — zeros are never visible on screen; replays each pass. Visitors stat is live in production (/api/visits, Upstash Redis, +1 per browser per day, static 106 fallback).
 - Track record ("Where I've Operated"): rows y 28→0 / autoAlpha 0.7s power3.out stagger 0.12 + emerald tick scaleY, once at top 70%.
 - Work cards: enter y 60→0 / autoAlpha 0.8s power3.out stagger 0.1; 3D tilt ≤6°, glare follows cursor; image hover scale 1.06 / 0.6s power2.out.
 - Finale (LAST section — footer removed, page hard-stops here): pin 200vh; "NOT BUILT TO LOSE." scrubs scale 0.92→1 + tracking wide→tight + opacity 0.35→1; emerald radial flare blooms 0.6→1; CTAs (magnetic, lerp 0.15, max 24px) appear at 0.75; sign-off (name + school bottom-left, © 2026 bottom-right) scrubs in 0.9→1, reversible.
 
 ## Safety rails
+- Scroll is locked (body overflow hidden) while the preloader is up. `ScrollTrigger.refresh()` runs post-reveal in BOTH modes, and Stats/TrackRecord/WorkCards effects depend on `lite` — the SSR full-mode layout collapses when the lite flip lands, so triggers must re-measure or they listen at stale positions (the mobile stuck-at-zero bug).
 - Grain overlay 6% opacity, pointer-events none, everywhere.
 - `prefers-reduced-motion` OR viewport <768px: no pins/scrubs — poster frames, 0.4s fades, counters still count.
 - `invalidateOnRefresh: true` on every pinned trigger; masked text via overflow-hidden wrappers + transforms only.
